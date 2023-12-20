@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mémorisation de Vocabulaire</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="app">
+
+        <h1>Mémorisation de Vocabulaire</h1>
+
+        <h2>Liste des mots</h2>
+        <ul id="wordList">
+            <% for(var i = 0; i < wordTable.length; i++){ %>
+                <li>
+                    <span><%= wordTable[i].mot %> - <%= wordTable[i].traduction %> (<%= wordTable[i].percentageCorrect %>%)</span>
+                    <form method="post" action="deleteWord" style="display:inline;">
+                        <input type="hidden" name="deleteWord" value="<%= wordTable[i].id %>">
+                        <input type="submit" value="Supprimer">
+                    </form>
+                </li>
+            <% }; %>
+        </ul>
+
+        <h2>Ajouter un mot</h2>
+        <form action="addWord" method="post">
+            <label>Mot:</label>
+            <input name="word" type="text" placeholder="Mot">
+            <label>Traduction:</label>
+            <input name="translation" type="text" placeholder="Traduction">
+            <input type="submit" value="Ajouter">
+        </form>
+
+        <h2>Test de mémorisation</h2>
+        <form action="testMemory" method="post">
+            <label>Sélectionnez un mot:</label>
+            <select name="selectedWord">
+                <% for(var i = 0; i < wordTable.length; i++){ %>
+                    <option value="<%= wordTable[i].id %>"><%= wordTable[i].mot %></option>
+                <% }; %>
+            </select>
+            <label>Entrez la traduction:</label>
+            <input name="userTranslation" type="text" placeholder="Traduction">
+            <input type="submit" value="Vérifier">
+            
+            <% if (typeof feedback !== 'undefined') { %>
+                <p><%= feedback %></p>
+            <% } %>
+        </form>
+
+    </div>
+
+    <script src="home.js"></script>
+</body>
+</html>
+
+
